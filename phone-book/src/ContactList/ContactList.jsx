@@ -1,8 +1,7 @@
 import React from 'react'
-
 export default function ContactList({contacts, onEdit, onDelete}) {
 
-    
+    console.log(contacts);
   return (
     <div>
         {contacts.map(contact => (
