@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import './App.css'
 import ContactList from '../ContactList/ContactList'
+import ContactForm from '../ContactForm/ContactForm'
 
 function App() {
   const [currentPage, setCurrentPage] = useState('list');
@@ -19,9 +20,10 @@ function App() {
 
   return (
     <>
-      <button onClick={() => {setCurrentPage('list')}}>List</button>
+      {/* <button onClick={() => {setCurrentPage('list')}}>List</button>
       <button onClick={() => {setCurrentPage('add')}}>Add</button>
-      <ContactList contacts={contacts}></ContactList>
+      <ContactList contacts={contacts}></ContactList> */}
+      <ContactForm></ContactForm>
     </>
   )
 }
