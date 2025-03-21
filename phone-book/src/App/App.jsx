@@ -34,8 +34,6 @@ function App() {
     const updatedContacts = isEditing
       ? prevContacts.map((c) => (c.id === contact.id ? newContact : c))
       : [...prevContacts, newContact];
-
-    console.log("Updated contacts:", updatedContacts);
     return updatedContacts;
   });
 
