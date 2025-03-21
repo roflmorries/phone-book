@@ -61,8 +61,10 @@ function App() {
 
   return (
     <>
-      <button onClick={() => {setCurrentPage('list')}}>List</button>
-      <button onClick={() => {setCurrentPage('add')}}>Add</button>
+      <nav className='page__nav'>
+        <button className='nav__button' onClick={() => {setCurrentPage('list')}}>List</button>
+        <button className='nav__button' onClick={() => {setCurrentPage('add')}}>Add</button>
+      </nav>
       {currentPage === 'list' && (
       <ContactList contacts={contacts} onEdit={handleEditForm} onDelete={handleDeleteForm}></ContactList>
       )}

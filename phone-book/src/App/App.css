@@ -4,3 +4,19 @@
   padding: 2rem;
   text-align: center;
 }
+
+.page__nav {
+  display: flex;
+  justify-content: space-around;
+}
+
+.nav__button {
+  background: none;
+  font-size: 24px;
+  transition: color 0.25s;
+  border-radius: 0%;
+}
+.nav__button:hover {
+  color: blue;
+  border: none;
+}

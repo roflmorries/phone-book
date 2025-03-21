@@ -1,0 +1,44 @@
+.contacts__wrapper {
+    border-radius: 17px;
+    border: 4px solid rgba( 255, 255, 255, 0.25 );
+    background: rgba( 255, 255, 255, 0.25 );
+    transition: border 0.5s ease-in-out; 
+    padding: 50px;
+}
+
+.contacts__container {
+    display: flex;
+    /* gap: 2.5rem; */
+    justify-content: space-between;
+
+}
+
+.contact__block {
+    display: flex;
+    width: 65%;
+    justify-content: space-between;
+    align-content: center;
+    p {
+        width: 35%;
+        /* text-align: center; */
+        text-align: left;
+    }
+}
+
+.buttons__block {
+    display: flex;
+    gap: 2.5rem;
+    align-items: center;
+}
+
+.edit__button {
+    height: 40px;
+    width: 100px;
+    background-color: #FF9500;
+}
+
+.delete__button {
+    height: 40px;
+    width: 100px;
+    background-color: #FF1300;
+}
