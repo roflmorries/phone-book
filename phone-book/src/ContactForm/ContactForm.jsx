@@ -1,11 +1,19 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useState } from 'react'
 
-export default function ContactForm(onSave, onCancel) {
+export default function ContactForm({onSave, onCancel, editContact}) {
     const [name, setName] = useState('');
-    const [login, setLogin] = useState('');
-    const [number, setNumber] = useState('');
+    const [username, setUserName] = useState('');
+    const [phone, setPhone] = useState('');
     const [error, setError] = useState(false);
+
+    useEffect(() => {
+        if (editContact) {
+            setName(editContact.name);
+            setUserName(editContact.username);
+            setPhone(editContact.phone)
+        }
+    }, [editContact])
 
 
     const handleNameChange = event => {
@@ -26,7 +34,7 @@ export default function ContactForm(onSave, onCancel) {
             setError('Упс.. Логин должен содержать только латинские символы и не больше 10 единиц!')
         } else {
             setError('');
-            setLogin(value)
+            setUserName(value)
         }
     }
 
@@ -44,12 +52,19 @@ export default function ContactForm(onSave, onCancel) {
       };
 
     const handlePhoneChange = (e) => {
-        setNumber(formatPhoneNumber(e.target.value));
+        setPhone(formatPhoneNumber(e.target.value));
       };
 
 
     const handleSubmit = event => {
-        // onSave
+        event.preventDefault();
+        const newContact = {
+            id: editContact?.id,
+            name,
+            username,
+            phone
+        }
+        onSave(newContact)
     }
 
   return (
@@ -59,10 +74,10 @@ export default function ContactForm(onSave, onCancel) {
         <input type="text" value={name} onChange={handleNameChange} placeholder='Enter your name'/>
 
         <label>Login:</label>
-        <input type="text" value={login} onChange={handleLoginChange} placeholder='Enter your login'/>
+        <input type="text" value={username} onChange={handleLoginChange} placeholder='Enter your login'/>
 
         <label>Phone number:</label>
-        <input type="text" value={number} onChange={handlePhoneChange} placeholder="+38(0XX)XX-XXX-XX"/>
+        <input type="text" value={phone} onChange={handlePhoneChange} placeholder="+38(0XX)XX-XXX-XX"/>
 
         <div>
             <button type='submit'>Save</button>
