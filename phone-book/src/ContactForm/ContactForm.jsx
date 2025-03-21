@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import { useState } from 'react'
+import './ContactForm.css'
 
 export default function ContactForm({onSave, onCancel, editContact}) {
     const [name, setName] = useState('');
@@ -18,9 +19,9 @@ export default function ContactForm({onSave, onCancel, editContact}) {
 
     const handleNameChange = event => {
         const { value } = event.target;
-        const nameValidation = /^[A-ZА-Я][a-zа-я]{0,11}$/;
+        const nameValidation = /^[A-Za-zА-Яа-яЁё ]{0,24}$/;
         if (!nameValidation.test(value)) {
-            setError('Уппс.. Имя должно начинаться с большой буквы и содержать не более 12 символов!')
+            setError('Имя должно начинаться с большой буквы и содержать не более 24 символов!')
         } else {
             setError('');
             setName(value);
@@ -29,9 +30,9 @@ export default function ContactForm({onSave, onCancel, editContact}) {
 
     const handleLoginChange = event => {
         const { value } = event.target;
-        const loginValidation = /^[A-Za-z]{0,9}$/
+        const loginValidation = /^[A-Za-z0-9]{0,12}$/
         if (!loginValidation.test(value)) {
-            setError('Упс.. Логин должен содержать только латинские символы и не больше 10 единиц!')
+            setError('Логин должен содержать цифры и латинские символы (не больше 12 единиц!)')
         } else {
             setError('');
             setUserName(value)
@@ -68,7 +69,7 @@ export default function ContactForm({onSave, onCancel, editContact}) {
     }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className='form__container'>
         <span className='form__error'>{error}</span>
         <label>Name:</label>
         <input type="text" value={name} onChange={handleNameChange} placeholder='Enter your name'/>
@@ -79,9 +80,9 @@ export default function ContactForm({onSave, onCancel, editContact}) {
         <label>Phone number:</label>
         <input type="text" value={phone} onChange={handlePhoneChange} placeholder="+38(0XX)XX-XXX-XX"/>
 
-        <div>
-            <button type='submit'>Save</button>
-            <button type='button' onClick={onCancel}>Cancel</button>
+        <div className='form__buttons_container'>
+            <button className='save__form__button' type='submit'>Save</button>
+            <button className='cancel__form__button' type='button' onClick={onCancel}>Cancel</button>
         </div>
     </form>
   )
