@@ -2,11 +2,12 @@ import { useEffect, useState } from 'react'
 import './App.css'
 import ContactList from '../ContactList/ContactList'
 import ContactForm from '../ContactForm/ContactForm'
+import { BrowserRouter, useRoutes, Link, Outlet, useNavigate } from 'react-router'
 
 function App() {
-  const [currentPage, setCurrentPage] = useState('');
   const [contacts, setContacts] = useState([]);
   const [editContact, setEditContact] = useState(null)
+  const navigate = useNavigate();
 
   useEffect(() => {
     const getUser = async () => {
@@ -38,13 +39,13 @@ function App() {
   });
 
   setEditContact(null);
-  setCurrentPage("list");
+  navigate("/list");
   };
 
   const handleEditForm = id => {
     const contactToEdit = contacts.find((c) => c.id === id)
     setEditContact(contactToEdit);
-    setCurrentPage('add');
+    navigate('/edit')
   }
 
   const handleDeleteForm = id => {
@@ -52,24 +53,44 @@ function App() {
   }
 
   const handleFormCancel = () => {
-    setCurrentPage('list');
+    navigate('/list')
+    setEditContact(null)
   }
 
 
+  const ElementRouter = () => useRoutes([
+    {
+      path: '/',
+      element: (
+        <>
+        <nav className='page__nav'>
+          <Link to="/list" className='nav__button'>List</Link>
+          <Link to="/add" className='nav__button'>Add</Link>
+        </nav>
+        <Outlet/>
+        </>
+        
+      ),
+      children: [
+        {
+          path: 'list',
+          element: <ContactList contacts={contacts} onEdit={handleEditForm} onDelete={handleDeleteForm}></ContactList>,
+        },
+        {
+          path: 'add',
+          element: <ContactForm onSave={handleSaveForm} onCancel={handleFormCancel} editContact={editContact}></ContactForm>,
+        },
+        {
+          path: 'edit',
+          element: <ContactForm onSave={handleSaveForm} onCancel={handleFormCancel} editContact={editContact}></ContactForm>,
+        },
+      ]
+    }
+  ])
+
 
   return (
-    <>
-      <nav className='page__nav'>
-        <button className='nav__button' onClick={() => {setCurrentPage('list')}}>List</button>
-        <button className='nav__button' onClick={() => {setCurrentPage('add')}}>Add</button>
-      </nav>
-      {currentPage === 'list' && (
-      <ContactList contacts={contacts} onEdit={handleEditForm} onDelete={handleDeleteForm}></ContactList>
-      )}
-      {currentPage === 'add' && (
-      <ContactForm onSave={handleSaveForm} onCancel={handleFormCancel} editContact={editContact}></ContactForm>
-      )}
-    </>
+      <ElementRouter />
   )
 }
 
